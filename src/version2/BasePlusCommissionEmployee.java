@@ -7,27 +7,35 @@ package version2;
 
 public class BasePlusCommissionEmployee {
     private int empID;
-    private String empName;
+    private Name empName;
     private double totalSale;
     private double baseSalary;
 
     public BasePlusCommissionEmployee() {
         this.empID = 0;
-        this.empName = "N/A";
+        this.empName = new Name();
         this.totalSale = 0.0;
         this.baseSalary = 0.0;
     }
 
     public BasePlusCommissionEmployee(int empID, String empName) {
+        this(empID, Name.fromString(empName), 0.0, 0.0);
+    }
+
+    public BasePlusCommissionEmployee(int empID, Name empName) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.totalSale = 0.0;
         this.baseSalary = 0.0;
     }
 
     public BasePlusCommissionEmployee(int empID, String empName, double totalSale, double baseSalary) {
+        this(empID, Name.fromString(empName), totalSale, baseSalary);
+    }
+
+    public BasePlusCommissionEmployee(int empID, Name empName, double totalSale, double baseSalary) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.setTotalSale(totalSale);
         this.setBaseSalary(baseSalary);
     }
@@ -40,12 +48,16 @@ public class BasePlusCommissionEmployee {
         this.empID = empID;
     }
 
-    public String getEmpName() {
+    public Name getEmpName() {
         return this.empName;
     }
 
+    public void setEmpName(Name empName) {
+        this.empName = (empName == null) ? new Name() : empName;
+    }
+
     public void setEmpName(String empName) {
-        this.empName = empName;
+        this.empName = Name.fromString(empName);
     }
 
     public double getTotalSale() {
@@ -90,10 +102,10 @@ public class BasePlusCommissionEmployee {
     }
 
     public void displayBasePlusCommissionEmployee() {
-        System.out.printf("ID: %d | Name: %s | Total Sale: %.2f | Base Salary: %.2f%n", this.empID, this.empName, this.totalSale, this.baseSalary);
+        System.out.printf("ID: %d | Name: %s | Total Sale: %.2f | Base Salary: %.2f%n", this.empID, this.empName.getFullName(), this.totalSale, this.baseSalary);
     }
 
     public String toString() {
-        return String.format("BasePlusCommissionEmployee [ID: %d, Name: %s, Total Sale: %.2f, Base Salary: %.2f, Commission Rate: %.0f%%, Total Salary: %.2f]", this.empID, this.empName, this.totalSale, this.baseSalary, this.getCommissionRate() * 100.0, this.computeSalary());
+        return String.format("BasePlusCommissionEmployee [ID: %d, Name: %s, Total Sale: %.2f, Base Salary: %.2f, Commission Rate: %.0f%%, Total Salary: %.2f]", this.empID, this.empName.getFullName(), this.totalSale, this.baseSalary, this.getCommissionRate() * 100.0, this.computeSalary());
     }
 }

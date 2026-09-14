@@ -2,32 +2,39 @@
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by FernFlower decompiler)
 //
-
 package version2;
 
 public class HourlyEmployee {
     private int empID;
-    private String empName;
+    private Name empName;
     private float totalHoursWorked;
     private double ratePerHour;
 
     public HourlyEmployee() {
         this.empID = 0;
-        this.empName = "N/A";
+        this.empName = new Name();
         this.totalHoursWorked = 0.0F;
         this.ratePerHour = 0.0;
     }
 
     public HourlyEmployee(int empID, String empName) {
+        this(empID, Name.fromString(empName), 0.0F, 0.0);
+    }
+
+    public HourlyEmployee(int empID, Name empName) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.totalHoursWorked = 0.0F;
         this.ratePerHour = 0.0;
     }
 
     public HourlyEmployee(int empID, String empName, float totalHoursWorked, double ratePerHour) {
+        this(empID, Name.fromString(empName), totalHoursWorked, ratePerHour);
+    }
+
+    public HourlyEmployee(int empID, Name empName, float totalHoursWorked, double ratePerHour) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.setTotalHoursWorked(totalHoursWorked);
         this.setRatePerHour(ratePerHour);
     }
@@ -40,12 +47,16 @@ public class HourlyEmployee {
         this.empID = empID;
     }
 
-    public String getEmpName() {
+    public Name getEmpName() {
         return this.empName;
     }
 
+    public void setEmpName(Name empName) {
+        this.empName = (empName == null) ? new Name() : empName;
+    }
+
     public void setEmpName(String empName) {
-        this.empName = empName;
+        this.empName = Name.fromString(empName);
     }
 
     public float getTotalHoursWorked() {
@@ -85,10 +96,10 @@ public class HourlyEmployee {
     }
 
     public void displayHourlyEmployee() {
-        System.out.printf("ID: %d | Name: %s | Hours: %.2f | Rate: %.2f/hr%n", this.empID, this.empName, this.totalHoursWorked, this.ratePerHour);
+        System.out.printf("ID: %d | Name: %s | Hours: %.2f | Rate: %.2f/hr%n", this.empID, this.empName.getFullName(), this.totalHoursWorked, this.ratePerHour);
     }
 
     public String toString() {
-        return String.format("HourlyEmployee [ID: %d, Name: %s, Hours: %.2f, Rate: %.2f, Total Salary: %.2f]", this.empID, this.empName, this.totalHoursWorked, this.ratePerHour, this.computeSalary());
+        return String.format("HourlyEmployee [ID: %d, Name: %s, Hours: %.2f, Rate: %.2f, Total Salary: %.2f]", this.empID, this.empName.getFullName(), this.totalHoursWorked, this.ratePerHour, this.computeSalary());
     }
 }

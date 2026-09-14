@@ -7,24 +7,32 @@ package version2;
 
 public class CommissionEmployee {
     private int empID;
-    private String empName;
+    private Name empName;
     private double totalSale;
 
     public CommissionEmployee() {
         this.empID = 0;
-        this.empName = "N/A";
+        this.empName = new Name();
         this.totalSale = 0.0;
     }
 
     public CommissionEmployee(int empID, String empName) {
+        this(empID, Name.fromString(empName), 0.0);
+    }
+
+    public CommissionEmployee(int empID, Name empName) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.totalSale = 0.0;
     }
 
     public CommissionEmployee(int empID, String empName, double totalSale) {
+        this(empID, Name.fromString(empName), totalSale);
+    }
+
+    public CommissionEmployee(int empID, Name empName, double totalSale) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.setTotalSale(totalSale);
     }
 
@@ -36,12 +44,16 @@ public class CommissionEmployee {
         this.empID = empID;
     }
 
-    public String getEmpName() {
+    public Name getEmpName() {
         return this.empName;
     }
 
+    public void setEmpName(Name empName) {
+        this.empName = (empName == null) ? new Name() : empName;
+    }
+
     public void setEmpName(String empName) {
-        this.empName = empName;
+        this.empName = Name.fromString(empName);
     }
 
     public double getTotalSale() {
@@ -73,10 +85,10 @@ public class CommissionEmployee {
     }
 
     public void displayCommissionEmployee() {
-        System.out.printf("ID: %d | Name: %s | Total Sale: %.2f%n", this.empID, this.empName, this.totalSale);
+        System.out.printf("ID: %d | Name: %s | Total Sale: %.2f%n", this.empID, this.empName.getFullName(), this.totalSale);
     }
 
     public String toString() {
-        return String.format("CommissionEmployee [ID: %d, Name: %s, Total Sale: %.2f, Total Salary: %.2f]", this.empID, this.empName, this.totalSale, this.computeSalary());
+        return String.format("CommissionEmployee [ID: %d, Name: %s, Total Sale: %.2f, Total Salary: %.2f]", this.empID, this.empName.getFullName(), this.totalSale, this.computeSalary());
     }
 }

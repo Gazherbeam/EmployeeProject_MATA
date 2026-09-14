@@ -7,27 +7,35 @@ package version2;
 
 public class PieceWorkerEmployee {
     private int empID;
-    private String empName;
+    private Name empName;
     private int totalPiecesFinished;
     private double ratePerPiece;
 
     public PieceWorkerEmployee() {
         this.empID = 0;
-        this.empName = "N/A";
+        this.empName = new Name();
         this.totalPiecesFinished = 0;
         this.ratePerPiece = 0.0;
     }
 
     public PieceWorkerEmployee(int empID, String empName) {
+        this(empID, Name.fromString(empName), 0, 0.0);
+    }
+
+    public PieceWorkerEmployee(int empID, Name empName) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.totalPiecesFinished = 0;
         this.ratePerPiece = 0.0;
     }
 
     public PieceWorkerEmployee(int empID, String empName, int totalPiecesFinished, double ratePerPiece) {
+        this(empID, Name.fromString(empName), totalPiecesFinished, ratePerPiece);
+    }
+
+    public PieceWorkerEmployee(int empID, Name empName, int totalPiecesFinished, double ratePerPiece) {
         this.empID = empID;
-        this.empName = empName;
+        this.setEmpName(empName);
         this.setTotalPiecesFinished(totalPiecesFinished);
         this.setRatePerPiece(ratePerPiece);
     }
@@ -40,12 +48,16 @@ public class PieceWorkerEmployee {
         this.empID = empID;
     }
 
-    public String getEmpName() {
+    public Name getEmpName() {
         return this.empName;
     }
 
+    public void setEmpName(Name empName) {
+        this.empName = (empName == null) ? new Name() : empName;
+    }
+
     public void setEmpName(String empName) {
-        this.empName = empName;
+        this.empName = Name.fromString(empName);
     }
 
     public int getTotalPiecesFinished() {
@@ -82,10 +94,10 @@ public class PieceWorkerEmployee {
     }
 
     public void displayPieceWorkerEmployee() {
-        System.out.printf("ID: %d | Name: %s | Pieces Finished: %d | Rate/Piece: %.2f%n", this.empID, this.empName, this.totalPiecesFinished, this.ratePerPiece);
+        System.out.printf("ID: %d | Name: %s | Pieces Finished: %d | Rate/Piece: %.2f%n", this.empID, this.empName.getFullName(), this.totalPiecesFinished, this.ratePerPiece);
     }
 
     public String toString() {
-        return String.format("PieceWorkerEmployee [ID: %d, Name: %s, Pieces: %d, Rate: %.2f, Total Salary: %.2f]", this.empID, this.empName, this.totalPiecesFinished, this.ratePerPiece, this.computeSalary());
+        return String.format("PieceWorkerEmployee [ID: %d, Name: %s, Pieces: %d, Rate: %.2f, Total Salary: %.2f]", this.empID, this.empName.getFullName(), this.totalPiecesFinished, this.ratePerPiece, this.computeSalary());
     }
 }
