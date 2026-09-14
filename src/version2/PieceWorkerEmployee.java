@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package version1;
+package version2;
 
 public class PieceWorkerEmployee {
     private int empID;
