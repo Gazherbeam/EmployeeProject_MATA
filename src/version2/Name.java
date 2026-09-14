@@ -9,14 +9,38 @@ public class Name {
         this("N/A", "", "N/A");
     }
 
-    public Name(String var1, String var2) {
-        this(var1, "", var2);
+    public Name(String firstName, String lastName) {
+        this(firstName, "", lastName);
     }
 
-    public Name(String var1, String var2, String var3) {
-        this.setFirstName(var1);
-        this.setMiddleName(var2);
-        this.setLastName(var3);
+    public Name(String firstName, String middleName, String lastName) {
+        this.setFirstName(firstName);
+        this.setMiddleName(middleName);
+        this.setLastName(lastName);
+    }
+
+    public static Name fromString(String fullName) {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            return new Name();
+        }
+
+        String[] parts = fullName.trim().split("\\s+");
+        if (parts.length == 1) {
+            return new Name(parts[0], "", "");
+        }
+        if (parts.length == 2) {
+            return new Name(parts[0], parts[1]);
+        }
+
+        StringBuilder middle = new StringBuilder();
+        for (int i = 1; i < parts.length - 1; i++) {
+            if (i > 1) {
+                middle.append(" ");
+            }
+            middle.append(parts[i]);
+        }
+
+        return new Name(parts[0], middle.toString(), parts[parts.length - 1]);
     }
 
     public String getFirstName() {
