@@ -1,4 +1,4 @@
-package PACKAGE_NAME;
+package version1;
 
 public class PieceWorkerEmployee {
 }
