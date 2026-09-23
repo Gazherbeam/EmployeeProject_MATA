@@ -1,0 +1,47 @@
+package version5;
+
+import java.util.Objects;
+
+public class HourlyEmployee extends Employee {
+    private float totalHoursWorked;
+    private double ratePerHour;
+
+    public HourlyEmployee() { this(0, new Name(), new MyDate(), new MyDate(), 0, 0); }
+    public HourlyEmployee(int id, String name, float hours, double rate) {
+        this(id, Name.fromString(name), new MyDate(), new MyDate(), hours, rate);
+    }
+    public HourlyEmployee(int id, Name name, MyDate birth, MyDate hire, float hours, double rate) {
+        super(id, name, birth, hire);
+        this.setTotalHoursWorked(hours);
+        this.setRatePerHour(rate);
+    }
+
+    public float getTotalHoursWorked() { return this.totalHoursWorked; }
+    public void setTotalHoursWorked(float value) { this.totalHoursWorked = Math.max(0, value); }
+    public double getRatePerHour() { return this.ratePerHour; }
+    public void setRatePerHour(double value) { this.ratePerHour = Math.max(0, value); }
+
+    @Override
+    public double computeSalary(int currentMonth) {
+        double regularHours = Math.min(this.totalHoursWorked, 40);
+        double overtimeHours = Math.max(0, this.totalHoursWorked - 40);
+        double basePay = regularHours * this.ratePerHour + overtimeHours * this.ratePerHour * 1.5;
+        return basePay + this.getBirthdayBonus(currentMonth);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!super.equals(object)) return false;
+        HourlyEmployee employee = (HourlyEmployee) object;
+        return Float.compare(this.totalHoursWorked, employee.totalHoursWorked) == 0
+                && Double.compare(this.ratePerHour, employee.ratePerHour) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), this.totalHoursWorked, this.ratePerHour);
+    }
+
+    @Override public HourlyEmployee clone() { return (HourlyEmployee) super.clone(); }
+    @Override public String toString() { return String.format("HourlyEmployee [%s]", this.employeeDetails()); }
+}

@@ -1,0 +1,30 @@
+package version4;
+
+public class CommissionEmployee extends Employee {
+    private double totalSale;
+    public CommissionEmployee() {
+        this(0, new Name(), new MyDate(), new MyDate(), 0);
+    }
+
+    public CommissionEmployee(int id, String name, double sales) {
+        this(id, Name.fromString(name), new MyDate(), new MyDate(), sales);
+    }
+
+    public CommissionEmployee(int id, Name name, MyDate birth, MyDate hire, double sales) {
+        super(id, name, birth, hire);
+        this.setTotalSale(sales);
+    }
+
+    public double getTotalSale() { return this.totalSale; }
+    public void setTotalSale(double value) { this.totalSale = Math.max(0, value); }
+    public double getCommissionRate() {
+        if (this.totalSale < 50000) return 0.05;
+        if (this.totalSale < 100000) return 0.10;
+        if (this.totalSale < 500000) return 0.15;
+        return 0.20;
+    }
+
+    public double computeSalary() { return this.totalSale * this.getCommissionRate(); }
+    @Override public CommissionEmployee clone() { return (CommissionEmployee) super.clone(); }
+    @Override public String toString() { return String.format("CommissionEmployee [%s]", this.employeeDetails()); }
+}
